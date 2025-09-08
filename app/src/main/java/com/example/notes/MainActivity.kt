@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.notes.presentation.AppelScreen
 import com.example.notes.ui.theme.NotesTheme
 
 class MainActivity : ComponentActivity() {
@@ -39,96 +40,17 @@ class MainActivity : ComponentActivity() {
             NotesTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val viewModel: NotesViewModel = viewModel()
-                    NotesList(
-                        notes = viewModel.notes,
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    AppelScreen(innerPadding as Modifier)
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun NotesList(notes: List<Note>, modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier.padding(10.dp)) {
-        item() {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = "Notes List")
-                IconButton(
-                    onClick = {},
-                    colors = IconButtonDefaults.iconButtonColors(
-                        contentColor = MaterialTheme.colorScheme.primary,
-                    )
-                ) {
-                    Icon(Icons.Default.ArrowForward, contentDescription = "")
-                }
-            }
-        }
-
-        item {
-            Divider(modifier = Modifier.padding(vertical = 10.dp), thickness = 1.dp)
-        }
-
-        items(notes, contentType = { it }) { note ->
-            Text(
-                text = "${note.title}: ${note.content}",
-                modifier = Modifier.padding(vertical = 5.dp)
-            )
-        }
-    }
-}
-
-@Composable
-fun GridContent() {
-//    LazyVerticalGrid(
-//        columns = GridCells.Adaptive(128.dp),
-//        horizontalArrangement = Arrangement.spacedBy(24.dp),
-//    ) {
-//        items(100) { index ->
-//            Text(
-//                text = "Item $index",
-//                modifier = Modifier.padding(8.dp)
-//            )
-//        }
-//    }
-
-    LazyVerticalGrid(
-        columns = object : GridCells {
-            override fun Density.calculateCrossAxisCellSizes(
-                availableSize: Int,
-                spacing: Int
-            ): List<Int> {
-                val firstColumn = (availableSize - spacing) * 2 / 3
-                val secondColumn = availableSize - spacing - firstColumn
-                return listOf(firstColumn, secondColumn)
-            }
-        },
-        horizontalArrangement = Arrangement.spacedBy(24.dp),
-    ) {
-        items(100) { index ->
-            Text(
-                text = "Item $index",
-                modifier = Modifier.padding(8.dp)
-            )
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun NotesListPreview() {
+fun GreetingPreview() {
     NotesTheme {
-        NotesList(
-            notes = listOf(
-                Note(1, "First Note", "This is your first note!"),
-                Note(2, "Second Note", "Another note example.")
-            ),
-        )
+        AppelScreen(Modifier)
     }
 }
